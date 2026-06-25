@@ -21,7 +21,6 @@ def init_db():
 def index():
     conn = get_db_connection()
     courses = conn.execute('SELECT * FROM courses').fetchall()
-    # Talabalarni kurs nomi bilan qo'shib olish
     students = conn.execute('''
         SELECT students.name as student_name, courses.name as course_name 
         FROM students 
@@ -53,4 +52,6 @@ def add_student():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True)
+    # Railway uchun portni aniqlash
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
